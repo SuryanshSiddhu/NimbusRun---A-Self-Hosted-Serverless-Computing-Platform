@@ -1,4 +1,4 @@
-# NimbusRun — CLAUDE.md
+# NimbusRun
 
 ## Project Overview
 
