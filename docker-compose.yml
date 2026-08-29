@@ -1,0 +1,51 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: nimbusrun-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: nimbusrun
+      POSTGRES_PASSWORD: nimbusrun
+      POSTGRES_DB: nimbusrun
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7-alpine
+    container_name: nimbusrun-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  prometheus:
+    image: prom/prometheus:v2.51.0
+    container_name: nimbusrun-prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./configs/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+
+  grafana:
+    image: grafana/grafana:11.0.0
+    container_name: nimbusrun-grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./configs/grafana-dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./configs/grafana-datasources:/etc/grafana/provisioning/datasources:ro
+
+volumes:
+  postgres_data:
+  redis_data:
+  grafana_data:

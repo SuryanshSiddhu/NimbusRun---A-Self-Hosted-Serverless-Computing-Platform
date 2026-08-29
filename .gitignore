@@ -1,0 +1,35 @@
+# Build outputs
+bin/
+*.exe
+*.exe~
+*.test
+*.out
+*.prof
+
+# Local credentials and results (not for public repo)
+RESULTS.md
+.env
+.env.local
+.nimbus
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Go workspace
+vendor/
+go.work
+
+# Local data
+data/
+*.sqlite
+*.db
+
+# Test artifacts
+loadtest/summary.json
+loadtest/benchmark.json
